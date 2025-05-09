@@ -65,8 +65,8 @@
 		231D7F372DBA820E00CE4816 = {
 			isa = PBXGroup;
 			children = (
-				231D7F422DBA820E00CE4816 /* CursoiOS */,
 				231D7F412DBA820E00CE4816 /* Products */,
+				231D7F422DBA820E00CE4816 /* CursoiOS */,
 			);
 			sourceTree = "<group>";
 		};
