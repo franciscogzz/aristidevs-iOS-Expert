@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SuperHeroSearcherView: View {
     @State var superheroName: String = ""
+    @State var wrapper: Api.Wrapper? = nil
     
     var body: some View {
         VStack {
@@ -29,13 +30,15 @@ struct SuperHeroSearcherView: View {
                 print(superheroName)
                 Task {
                     do {
-                        let response = try await Api().getHerosByName(name: superheroName)
-                        print(response)
+                        wrapper = try await Api().getHerosByName(name: superheroName)
                     } catch {
                         print("ERROR")
                     }
                 }
             }
+            List(wrapper?.results ?? []) { superhero in
+                SuperHeroItem(superhero: superhero)
+            }.listStyle(.plain)
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -43,6 +46,27 @@ struct SuperHeroSearcherView: View {
     }
 }
 
+struct SuperHeroItem: View {
+    let superhero: Api.SuperHero
+    
+    var body: some View {
+        ZStack {
+            Rectangle()
+            VStack {
+                Spacer()
+                Text(superhero.name)
+                    .font(.title)
+                    .bold()
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(.white.opacity(0.5))
+            }
+        }.frame(height: 200).cornerRadius(16).background(Color.backgroundApp).padding(16)
+    }
+}
+
+
 #Preview {
-    SuperHeroSearcherView()
+    SuperHeroItem(superhero: Api.SuperHero(id: "", name: "Iron Man"))
 }

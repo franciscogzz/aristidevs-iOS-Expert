@@ -14,7 +14,7 @@ class Api {
         let results: [SuperHero]
     }
     
-    struct SuperHero: Codable {
+    struct SuperHero: Codable, Identifiable {
         let id: String
         let name: String
     }
