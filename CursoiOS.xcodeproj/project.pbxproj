@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		237CD5AA2DD78692008D296C /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 237CD5A92DD78692008D296C /* SDWebImageSwiftUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		231D7F4E2DBA820F00CE4816 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -42,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				237CD5AA2DD78692008D296C /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +105,7 @@
 			);
 			name = CursoiOS;
 			packageProductDependencies = (
+				237CD5A92DD78692008D296C /* SDWebImageSwiftUI */,
 			);
 			productName = CursoiOS;
 			productReference = 231D7F402DBA820E00CE4816 /* CursoiOS.app */;
@@ -177,6 +183,9 @@
 			);
 			mainGroup = 231D7F372DBA820E00CE4816;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				237CD5A82DD785B1008D296C /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 231D7F412DBA820E00CE4816 /* Products */;
 			projectDirPath = "";
@@ -253,6 +262,8 @@
 /* Begin XCBuildConfiguration section */
 		231D7F5F2DBA820F00CE4816 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 231D7F422DBA820E00CE4816 /* CursoiOS */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -316,6 +327,8 @@
 		};
 		231D7F602DBA820F00CE4816 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 231D7F422DBA820E00CE4816 /* CursoiOS */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -532,6 +545,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		237CD5A82DD785B1008D296C /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		237CD5A92DD78692008D296C /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 237CD5A82DD785B1008D296C /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 231D7F382DBA820E00CE4816 /* Project object */;
 }

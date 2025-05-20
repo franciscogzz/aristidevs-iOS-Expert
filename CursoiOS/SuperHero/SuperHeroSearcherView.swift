@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct SuperHeroSearcherView: View {
     @State var superheroName: String = ""
     @State var wrapper: Api.Wrapper? = nil
+    @State var isLoading: Bool = false
     
     var body: some View {
         VStack {
@@ -27,18 +29,30 @@ struct SuperHeroSearcherView: View {
             .padding(8)
             .autocorrectionDisabled()
             .onSubmit {
+                isLoading = true
                 print(superheroName)
                 Task {
                     do {
                         wrapper = try await Api().getHerosByName(name: superheroName)
                     } catch {
-                        print("ERROR")
+                        print("ERROR", error)
                     }
+                    isLoading = false
                 }
             }
-            List(wrapper?.results ?? []) { superhero in
-                SuperHeroItem(superhero: superhero)
-            }.listStyle(.plain)
+            if isLoading {
+                ProgressView().tint(.white)
+            }
+            NavigationStack {
+                List(wrapper?.results ?? []) { superhero in
+                    ZStack {
+                        SuperHeroItem(superhero: superhero)
+                        NavigationLink(destination: SuperHeroDetailView(
+                            id: superhero.id
+                        )) { EmptyView().opacity(0) }
+                    }.listRowBackground(Color.backgroundApp)
+                }.listStyle(.plain)
+            }
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -51,7 +65,11 @@ struct SuperHeroItem: View {
     
     var body: some View {
         ZStack {
-            Rectangle()
+            WebImage(url: URL(string: superhero.image.url))
+                .resizable()
+                .indicator(.activity)
+                .scaledToFill()
+                .frame(height: 200)
             VStack {
                 Spacer()
                 Text(superhero.name)
@@ -68,5 +86,6 @@ struct SuperHeroItem: View {
 
 
 #Preview {
-    SuperHeroItem(superhero: Api.SuperHero(id: "", name: "Iron Man"))
+    // SuperHeroItem(superhero: Api.SuperHero(id: "", name: "Iron Man"))
+    SuperHeroSearcherView()
 }
