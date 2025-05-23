@@ -19,12 +19,38 @@ struct FavPlacesView: View {
         )
     )
     @State var places: [Place] = []
+    @State var showPopup: Bool = false
+    @State var name: String = ""
+    @State var isFavorite: Bool = false
     
     var body: some View {
         ZStack {
             MapReader { proxy in
                 Map(position: $position).onTapGesture {
-                    
+                    showPopup = true
+                }
+            }
+            
+            if showPopup {
+                let view = VStack {
+                    Text("Añadir lugar").font(.title2).bold()
+                    Spacer()
+                    TextField("Nombre del lugar", text: $name).padding(.bottom, 8)
+                    Toggle("¿Guardar favorito?", isOn: $isFavorite)
+                    Spacer()
+                    Button("Guardar") {
+                        
+                    }
+                }
+                
+                withAnimation {
+                    CustomDialogView(
+                        closeDialog: {
+                            showPopup = false
+                        },
+                        onDismissOutside: true,
+                        content: view
+                    )
                 }
             }
         }
