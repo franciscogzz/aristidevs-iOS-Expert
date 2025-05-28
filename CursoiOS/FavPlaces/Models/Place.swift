@@ -11,5 +11,6 @@ import MapKit
 struct Place: Identifiable {
     let id: UUID = UUID()
     let name: String
-    let coordinate: CLLocationCoordinate2D
+    let isFavorite: Bool
+    let coordinates: CLLocationCoordinate2D
 }
