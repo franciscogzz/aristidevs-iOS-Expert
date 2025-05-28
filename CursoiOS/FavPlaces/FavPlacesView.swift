@@ -22,6 +22,11 @@ struct FavPlacesView: View {
     @State var placeCoordinates: CLLocationCoordinate2D? = nil
     @State var name: String = ""
     @State var isFavorite: Bool = false
+    @State var showSheet: Bool = false
+    
+    let sheetHeight = stride(from: 0.3, through: 0.3, by: 0.1).map {
+        PresentationDetent.fraction($0)
+    }
     
     var body: some View {
         ZStack {
@@ -36,6 +41,18 @@ struct FavPlacesView: View {
                 }.onTapGesture { coords in
                     if let coordinates = proxy.convert(coords, from: .local) {
                         placeCoordinates = coordinates
+                    }
+                }.overlay {
+                    VStack {
+                        Button("Show list") {
+                            showSheet = true
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(.white)
+                        .cornerRadius(12)
+                        .padding(12)
+                        Spacer()
                     }
                 }
             }
@@ -63,7 +80,11 @@ struct FavPlacesView: View {
                     )
                 }
             }
-        }
+        }.sheet(isPresented: $showSheet, content: {
+            ZStack {
+                Text("Bottom sheet")
+            }.presentationDetents(Set(sheetHeight))
+        })
     }
     
     func onSavePlace(name: String, isFav: Bool, coordinates: CLLocationCoordinate2D) {
