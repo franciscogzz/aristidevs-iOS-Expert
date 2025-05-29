@@ -81,8 +81,20 @@ struct FavPlacesView: View {
                 }
             }
         }.sheet(isPresented: $showSheet, content: {
-            ZStack {
-                Text("Bottom sheet")
+            ScrollView(.horizontal) {
+                LazyHStack {
+                    ForEach(places) { place in
+                        let color = place.isFavorite ? Color.yellow.opacity(0.5) : Color.black.opacity(0.5)
+                        VStack {
+                            Text(place.name).font(.title3).bold()
+                        }.frame(width: 150, height: 100).overlay {
+                            RoundedRectangle(cornerRadius: 20).stroke(color, lineWidth: 1).padding(.horizontal, 16)
+                        }.shadow(radius: 5).onTapGesture {
+                            animateCamera(coordinates: place.coordinates)
+                            showSheet = false
+                        }
+                    }
+                }
             }.presentationDetents(Set(sheetHeight))
         })
     }
@@ -96,6 +108,17 @@ struct FavPlacesView: View {
         name = ""
         isFavorite = false
         placeCoordinates = nil
+    }
+    
+    func animateCamera(coordinates: CLLocationCoordinate2D) {
+        withAnimation {
+            position = MapCameraPosition.region(
+                MKCoordinateRegion(
+                    center: coordinates,
+                    span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+                )
+            )
+        }
     }
 }
 
